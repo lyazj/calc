@@ -5,7 +5,7 @@ import time
 import tkinter as tk
 
 class Window:
-    # TODO: draw buttons: 0123456789.e+-*/()=ABCUDR
+    # TODO: draw buttons: 0123456789.e+-*/()=ABCUDLRN
 
     def __init__(self, calculator: Calculator, screen: Screen):
         self.calculator = calculator
@@ -74,7 +74,7 @@ class Window:
         time.sleep(0.5)
         self.click('U')
         time.sleep(0.5)
-        self.click('R')
+        self.click('N')
         time.sleep(0.5)
         self.click('+')
         time.sleep(0.5)
@@ -87,6 +87,14 @@ class Window:
         self.click('3')
         time.sleep(0.5)
         self.click('=')
+        time.sleep(0.5)
+        self.click('L')
+        time.sleep(0.5)
+        self.click('L')
+        time.sleep(0.5)
+        self.click('R')
+        time.sleep(0.5)
+        self.click('R')
         time.sleep(0.5)
 
     def click(self, c: str) -> None:
@@ -102,7 +110,11 @@ class Window:
             return self.lookup()
         if c == 'D':  # Down
             return self.lookdown()
-        if c == 'R':  # Restore
+        if c == 'L':  # Left
+            return self.screen.left_shift()
+        if c == 'R':  # Right
+            return self.screen.right_shift()
+        if c == 'N':  # Normal
             return self.restore()
         return self.input(c)
 
