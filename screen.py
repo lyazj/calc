@@ -6,7 +6,8 @@ import time
 class VirtualSerial:
 
     # open fd=1 with write|binary|unbuffered mode
-    def __init__(self):
+    def __init__(self, serial: Serial=None):
+        self.serial = serial
         self.out = os.fdopen(1, 'wb', 0)
 
     # not supplied in Serial
@@ -21,8 +22,9 @@ class VirtualSerial:
         if type(b) is not bytes:
             raise ValueError('expect bytes argument')
         self._clear()
-        if b:
-            self.out.write(b)
+        self.out.write(b)
+        if self.serial:
+            self.serial.write(b)
 
 class Screen:
 
@@ -34,6 +36,9 @@ class Screen:
         self.serial = serial
         self.buffer = ''
         self.window = [0, 0]
+
+    def __len__(self) -> int:
+        return len(self.buffer)
 
     @property
     # get string content of the buffer window
@@ -74,6 +79,10 @@ class Screen:
     def write(self, s: str) -> None:
         self.buffer = s
         self.ragged_left()
+
+    # get buffer content
+    def read(self) -> str:
+        return self.buffer
 
     # write at the end of the buffer
     def append(self, s: str) -> None:
