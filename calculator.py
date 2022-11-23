@@ -17,7 +17,7 @@ class Calculator:
             value = math.nan
         if type(value) is not int and type(value) is not float:
             raise ValueError(f'invalid value type: {repr(type(value))}')
-        return self.format(float(value))
+        return value, self.format(float(value))
 
     def format(self, value: float):
         return '%g' % value
