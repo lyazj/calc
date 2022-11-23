@@ -13,7 +13,7 @@ class Calculator:
             raise ValueError(f'invalid expression: {repr(expr)}')
         try:
             value = eval(expr)  # it's dangeous but we like this...
-        except (ZeroDivisionError, SyntaxError):
+        except Exception:  # e.g., ZeroDivisionError, SyntaxError...
             value = math.nan
         if type(value) is not int and type(value) is not float:
             raise ValueError(f'invalid value type: {repr(type(value))}')
