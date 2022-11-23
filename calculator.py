@@ -15,12 +15,15 @@ class Calculator:
             value = eval(expr)  # it's dangeous but we like this...
         except Exception:  # e.g., ZeroDivisionError, SyntaxError...
             value = math.nan
-        if type(value) is not int and type(value) is not float:
-            raise ValueError(f'invalid value type: {repr(type(value))}')
-        return value, self.format(float(value))
+        return value, self.format(value)
 
-    def format(self, value: float):
-        return '%g' % value
+    def format(self, value):
+        if type(value) is int:
+            return '%d' % value
+        elif type(value) is float:
+            return '%g' % value
+        else:  # the program may better crash if an unexpected type got...
+            raise ValueError(f'invalid value type: {repr(type(value))}')
 
 if __name__ == '__main__':
     calc = Calculator()
