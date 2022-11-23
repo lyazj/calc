@@ -7,7 +7,7 @@ class Calculator:
 
     def eval(self, expr: str):
         if expr[-1] != '=':
-            raise ValueError("except '=' terminator")
+            raise ValueError("expect '=' terminator")
         expr = expr[:-1]
         if not self.pattern.match(expr):
             raise ValueError(f'invalid expression: {repr(expr)}')
