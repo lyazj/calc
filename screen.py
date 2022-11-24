@@ -6,10 +6,13 @@ import time
 
 class VirtualSerial:
 
-    # open fd=1 with write|binary|unbuffered mode
+    # duplicate fd=1 and open it with write|binary|unbuffered mode
     def __init__(self, serial: Serial=None):
         self.serial = serial
-        self.out = os.fdopen(1, 'wb', 0)
+        self.out = os.fdopen(os.dup(1), 'wb', 0)
+
+    def __del__(self):
+        self.out.close()
 
     # not supplied in Serial
     def _clear(self) -> None:
