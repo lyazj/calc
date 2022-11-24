@@ -1,3 +1,4 @@
+import re
 import os
 import sys
 from serial import Serial
@@ -26,9 +27,15 @@ class VirtualSerial:
         if self.serial:
             self.serial.write(b)
 
+def Screen_capacity() -> int:
+    with open('calc.ino') as ino:
+        return int(re.search(
+            r'^\s*#\s*define\s+CAPACITY\s+(.*?)(?://|$)', ino.read(), re.M
+        ).groups()[0])
+
 class Screen:
 
-    capacity = 8  # we have 8 7-seg digit tubes...
+    capacity = Screen_capacity()
 
     def __init__(self, serial: Serial=None):
         if serial is None:
@@ -57,7 +64,7 @@ class Screen:
         # ragged left
         return (
             ('.' if self.window[0] > 0 else '|') + \
-            '%8s' % self.display + \
+            '%*s' % (self.capacity, self.display) + \
             ('.' if self.window[1] < len(self.buffer) else '|')
         ).encode()
 
