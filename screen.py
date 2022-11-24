@@ -10,6 +10,9 @@ class VirtualSerial:
     def __init__(self, serial: Serial=None):
         self.serial = serial
         self.out = os.fdopen(os.dup(1), 'wb', 0)
+        self._clear()
+        self.out.write(b'Connecting...')
+        time.sleep(5)
 
     def __del__(self):
         self.out.close()

@@ -14,6 +14,8 @@ class Window:
         self.cursor = 0     # current traceback position
         self.buffer = None  # saved screen buffer while looking backwards
 
+    # NOTE: It may take ~100 ms for the device to response,
+    #       so it's better to sleep(0.5) after each transcation.
     def loop(self) -> None:  #FIXME
         self.click('1')
         time.sleep(0.5)
