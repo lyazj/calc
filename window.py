@@ -44,6 +44,7 @@ class Window:
         for c in '0123456789.e+-*/()=ABCUDLRN':
             self.buttons[c] = self.create_button(c)
         self.labels['Input'].place(x=80, y=40)
+        self.labels['Control'].place(x=430, y=265)
         self.place_array(
             ['123', '456', '789', 'e0.', '+-*', '/()'],
             80, 100, 0.1, 0.1, 0.025, 0.025
@@ -52,6 +53,19 @@ class Window:
             ['LRN', 'UDA', "BC="],
             430, 325, 0.1, 0.1, 0.025, 0.025
         )
+        self.labels['Tips'] = tk.Label(
+            self.tk, text='''
+Tips
+L = Left       R = Right
+N = Normal mode
+U = Lookup     D = Lookdown
+A = Auto complete
+B = Backspace  C = Clear
+            '''.strip(),
+            font=('Consolas', 8),
+            justify=tk.LEFT
+        )
+        self.labels['Tips'].place(x=430, y=80)
 
     def place_array(self, a, x0, y0, rw, rh, mw, mh):
         # r: relevant  m: relevant margin
