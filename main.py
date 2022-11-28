@@ -6,7 +6,7 @@ from getpass import getuser
 # configuration
 port = None
 virtual = True
-virtualOnly = True  # False on release
+virtualOnly = False  # False on release
 
 # object constructions
 calculator = Calculator()

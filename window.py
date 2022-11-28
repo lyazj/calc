@@ -13,10 +13,62 @@ class Window:
         self.value = None   # current evaluation result
         self.cursor = 0     # current traceback position
         self.buffer = None  # saved screen buffer while looking backwards
+        self.width = 800
+        self.height = 600
+        self.tk = None
+        self.init_window()
+        self.labels = None
+        self.buttons = None
+        self.init_components()
+
+    def init_window(self) -> None:
+        self.tk = tk.Tk()
+        self.tk.title('calc')
+        self.tk.geometry(f'{self.width}x{self.height}')
+
+    def create_button(self, c: str) -> tk.Button:
+        return tk.Button(
+            self.tk, text=c, command=lambda: self.click(c)
+        )
+
+    def create_label(self, t: str) -> tk.Label:
+        return tk.Label(
+            self.tk, text=t
+        )
+
+    def init_components(self) -> None:
+        self.labels = {}
+        self.buttons = {}
+        for t in 'Input', 'Control':
+            self.labels[t] = self.create_label(t)
+        for c in '0123456789.e+-*/()=ABCUDLRN':
+            self.buttons[c] = self.create_button(c)
+        self.labels['Input'].place(x=80, y=40)
+        self.place_array(
+            ['123', '456', '789', 'e0.', '+-*', '/()'],
+            80, 100, 0.1, 0.1, 0.025, 0.025
+        )
+        self.place_array(
+            ['LRN', 'UDA', "BC="],
+            430, 325, 0.1, 0.1, 0.025, 0.025
+        )
+
+    def place_array(self, a, x0, y0, rw, rh, mw, mh):
+        # r: relevant  m: relevant margin
+        for i, ai in enumerate(a):
+            for j, c in enumerate(ai):
+                self.buttons[c].place(
+                    x=x0 + j * (rw + mw) * self.width,
+                    y=y0 + i * (rh + mh) * self.height,
+                    relwidth=rw, relheight=rh
+                )
+
+    def loop(self) -> None:
+        self.tk.mainloop()
 
     # NOTE: It may take ~100 ms for the device to response,
     #       so it's better to sleep(0.5) after each transcation.
-    def loop(self) -> None:  #FIXME
+    def test(self) -> None:
         self.click('1')
         time.sleep(0.5)
         self.click('+')
