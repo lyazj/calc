@@ -102,6 +102,7 @@ class Screen:
         self.buffer += s
         self.ragged_left()
 
+    # shrink at the end of the buffer
     def delete(self, n=1) -> bool:
         if n < 0 or n > len(self.buffer):
             return False
